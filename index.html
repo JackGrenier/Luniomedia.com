@@ -145,7 +145,6 @@ section{position:relative}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .form .btn{width:100%;justify-content:center;margin-top:8px}
 .form-note{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:14px;text-align:center;letter-spacing:.03em}
-.form-error{font-family:var(--body);font-size:13px;color:#ff8a9b;margin-top:12px;text-align:center;line-height:1.5}
 .form-success{display:none;text-align:center;padding:30px 10px}
 .form-success.show{display:block}
 .form-success .chk{width:54px;height:54px;border-radius:50%;border:1px solid var(--blue);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--blue-bright)}
@@ -168,23 +167,6 @@ footer{border-top:1px solid var(--line);padding:54px 0 40px;position:relative}
 .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:9px;transition:color .2s}
 .foot-col a:hover{color:var(--text)}
 .foot-bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.04em}
-
-.modal{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
-.modal.open{display:flex}
-.modal-backdrop{position:fixed;inset:0;background:rgba(4,10,22,.74);backdrop-filter:blur(7px)}
-.modal-panel{position:relative;z-index:1;width:100%;max-width:640px;margin:auto;background:var(--bg-2);border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;box-shadow:0 30px 90px -25px rgba(0,0,0,.75)}
-.modal.open .modal-panel{animation:modalIn .28s cubic-bezier(.16,1,.3,1)}
-@keyframes modalIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
-.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line)}
-.modal-head .eyebrow-sm{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-bright);display:block;margin-bottom:5px}
-.modal-head h3{font-family:var(--display);font-weight:500;font-size:19px;letter-spacing:-.01em}
-.modal-close{background:none;border:1px solid var(--line-strong);color:var(--text);width:36px;height:36px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1;flex:none;transition:border-color .2s,color .2s}
-.modal-close:hover{border-color:var(--blue);color:#fff}
-.modal-close:focus-visible{outline:2px solid var(--blue-bright);outline-offset:2px}
-.modal-body{background:#fff}
-.modal-body iframe{display:block;width:100%;min-height:660px;border:none}
-body.modal-lock{overflow:hidden}
-@media(max-width:720px){.modal{padding:16px 10px}.modal-body iframe{min-height:560px}}
 
 .js .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
 .js .reveal.in{opacity:1;transform:none}
@@ -239,7 +221,7 @@ body.modal-lock{overflow:hidden}
         <span class="lang-sep">/</span>
         <button class="lang-btn" data-lang="en">EN</button>
       </div>
-      <a href="#contact" data-booking class="btn btn-primary"><span data-i18n="nav.cta">Appel découverte</span> <span class="arw">→</span></a>
+      <a href="#contact" class="btn btn-primary"><span data-i18n="nav.cta">Appel découverte</span> <span class="arw">→</span></a>
       <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -361,7 +343,7 @@ body.modal-lock{overflow:hidden}
     <span class="eyebrow" style="justify-content:center" data-i18n="ctaband.eyebrow">Prêt à construire</span>
     <h2 data-i18n="ctaband.h2">Remplissez votre calendrier des bons contrats.</h2>
     <p data-i18n="ctaband.p">Un appel découverte gratuit de 20 minutes. On regarde votre situation et on vous dit franchement ce qui peut changer.</p>
-    <a href="#contact" data-booking class="btn btn-primary"><span data-i18n="ctaband.cta">Réserver mon appel découverte</span> <span class="arw">→</span></a>
+    <a href="#contact" class="btn btn-primary"><span data-i18n="ctaband.cta">Réserver mon appel découverte</span> <span class="arw">→</span></a>
   </div>
 </section>
 
@@ -396,10 +378,8 @@ body.modal-lock{overflow:hidden}
             </select>
           </div>
           <div class="field"><label for="message"><span data-i18n="form.goal">Votre objectif</span> <span class="req">*</span></label><textarea id="message" name="message" data-i18n-ph="form.goal.ph" placeholder="Ex. : on veut plus de contrats de toiture résidentielle dans la région de Montréal…" required></textarea></div>
-          <input type="hidden" name="_subject" value="Nouvelle demande — site Luniomedia">
           <button type="submit" class="btn btn-primary"><span data-i18n="form.submit">Envoyer ma demande</span> <span class="arw">→</span></button>
           <p class="form-note" data-i18n="form.note">⛨ Vos informations restent confidentielles. Aucun engagement.</p>
-          <p class="form-error" id="formError" data-i18n="form.err" style="display:none">Une erreur est survenue. Réessayez ou écrivez-nous à contact@luniomedia.com.</p>
         </form>
         <div class="form-success" id="formSuccess">
           <div class="chk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
@@ -462,22 +442,6 @@ body.modal-lock{overflow:hidden}
   </div>
 </footer>
 
-<div class="modal" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
-  <div class="modal-backdrop" data-close></div>
-  <div class="modal-panel">
-    <div class="modal-head">
-      <div>
-        <span class="eyebrow-sm" data-i18n="booking.eyebrow">Appel découverte · 20 min</span>
-        <h3 id="bookingTitle" data-i18n="booking.title">Réservez votre appel découverte</h3>
-      </div>
-      <button class="modal-close" data-close aria-label="Fermer" data-i18n-aria="booking.close">✕</button>
-    </div>
-    <div class="modal-body">
-      <iframe id="sEnhO9ehXYIQgbLVrJUw_1782500423446" data-src="https://api.leadconnectorhq.com/widget/booking/sEnhO9ehXYIQgbLVrJUw" title="Calendrier de réservation Luniomedia" scrolling="no" style="width:100%;border:none;overflow:hidden"></iframe>
-    </div>
-  </div>
-</div>
-
 <script>
 (function(){
   var I18N={
@@ -514,13 +478,12 @@ body.modal-lock{overflow:hidden}
       "form.email":"Courriel","form.email.ph":"jean@exemple.com","form.phone":"Téléphone","form.sector":"Type de projet",
       "form.sector.0":"Sélectionnez…","form.sector.1":"Construction résidentielle","form.sector.2":"Construction commerciale","form.sector.3":"Rénovation","form.sector.4":"Toiture / couverture","form.sector.5":"Excavation","form.sector.6":"Béton & fondation","form.sector.7":"Autre",
       "form.goal":"Votre objectif","form.goal.ph":"Ex. : on veut plus de contrats de toiture résidentielle dans la région de Montréal…",
-      "form.submit":"Envoyer ma demande","form.sending":"Envoi…","form.note":"⛨ Vos informations restent confidentielles. Aucun engagement.","form.err":"Une erreur est survenue. Réessayez ou écrivez-nous à contact@luniomedia.com.",
+      "form.submit":"Envoyer ma demande","form.note":"⛨ Vos informations restent confidentielles. Aucun engagement.",
       "form.ok.h":"Demande reçue. Merci&nbsp;!","form.ok.p":"Un membre de l'équipe Luniomedia vous contacte sous 24&nbsp;heures ouvrables.",
       "info.email":"Courriel","info.phone":"Téléphone","info.hours":"Heures","info.hours.v":"Lun – Ven · 8 h à 17 h (HE)",
       "spec.1":"<span class=\"k\">secteur</span> &gt; construction","spec.2":"<span class=\"k\">zone</span> &gt; Québec &amp; environs","spec.3":"<span class=\"k\">réponse</span> &gt; ≤ 24 h","spec.4":"<span class=\"k\">engagement</span> &gt; aucun contrat long terme","spec.5":"<span class=\"k\">statut</span> &gt; <span style=\"color:var(--blue-bright)\">● disponible</span>",
       "foot.tag":"L'agence marketing qui bâtit le carnet de commandes des entreprises de construction.","foot.nav":"Navigation",
-      "foot.s1":"Publicité ciblée","foot.s2":"SEO local","foot.s3":"Site de conversion","foot.s4":"Avis &amp; réputation","foot.quote":"Soumission gratuite","foot.rights":"Tous droits réservés.",
-      "booking.eyebrow":"Appel découverte · 20 min","booking.title":"Réservez votre appel","booking.close":"Fermer"
+      "foot.s1":"Publicité ciblée","foot.s2":"SEO local","foot.s3":"Site de conversion","foot.s4":"Avis &amp; réputation","foot.quote":"Soumission gratuite","foot.rights":"Tous droits réservés."
     },
     en:{
       "meta.title":"Luniomedia — Marketing for construction companies",
@@ -555,20 +518,17 @@ body.modal-lock{overflow:hidden}
       "form.email":"Email","form.email.ph":"john@example.com","form.phone":"Phone","form.sector":"Project type",
       "form.sector.0":"Select…","form.sector.1":"Residential construction","form.sector.2":"Commercial construction","form.sector.3":"Renovation","form.sector.4":"Roofing","form.sector.5":"Excavation","form.sector.6":"Concrete & foundation","form.sector.7":"Other",
       "form.goal":"Your goal","form.goal.ph":"E.g. we want more residential roofing contracts in the Montréal area…",
-      "form.submit":"Send my request","form.sending":"Sending…","form.note":"⛨ Your information stays confidential. No commitment.","form.err":"Something went wrong. Please try again or email us at contact@luniomedia.com.",
+      "form.submit":"Send my request","form.note":"⛨ Your information stays confidential. No commitment.",
       "form.ok.h":"Request received. Thank you!","form.ok.p":"A Luniomedia team member will contact you within 24 business hours.",
       "info.email":"Email","info.phone":"Phone","info.hours":"Hours","info.hours.v":"Mon – Fri · 8 AM to 5 PM (ET)",
       "spec.1":"<span class=\"k\">sector</span> &gt; construction","spec.2":"<span class=\"k\">area</span> &gt; Québec &amp; surroundings","spec.3":"<span class=\"k\">response</span> &gt; ≤ 24 h","spec.4":"<span class=\"k\">commitment</span> &gt; no long-term contract","spec.5":"<span class=\"k\">status</span> &gt; <span style=\"color:var(--blue-bright)\">● available</span>",
       "foot.tag":"The marketing agency that builds the order book for construction companies.","foot.nav":"Navigation",
-      "foot.s1":"Targeted advertising","foot.s2":"Local SEO","foot.s3":"Conversion website","foot.s4":"Reviews &amp; reputation","foot.quote":"Free quote","foot.rights":"All rights reserved.",
-      "booking.eyebrow":"Discovery call · 20 min","booking.title":"Book your call","booking.close":"Close"
+      "foot.s1":"Targeted advertising","foot.s2":"Local SEO","foot.s3":"Conversion website","foot.s4":"Reviews &amp; reputation","foot.quote":"Free quote","foot.rights":"All rights reserved."
     }
   };
 
-  var currentLang='fr';
   function setLang(lang){
     var d=I18N[lang]; if(!d)return;
-    currentLang=lang;
     document.documentElement.lang=lang;
     document.title=d["meta.title"];
     var md=document.getElementById('metaDesc'); if(md)md.setAttribute('content',d["meta.desc"]);
@@ -642,78 +602,19 @@ body.modal-lock{overflow:hidden}
   },{threshold:.2});
   document.querySelectorAll('.reveal,#skyline').forEach(function(el){io.observe(el);});
 
-  /* ===== Formspree =====
-     Remplacez VOTRE_ID_FORMSPREE ci-dessous par l'identifiant de votre formulaire
-     (ex. "xrgvabcd"), visible dans votre tableau de bord Formspree. */
-  var FORMSPREE_ID="xykqwpog";
-
-  var form=document.getElementById('contactForm');
-  var ok=document.getElementById('formSuccess');
-  var errEl=document.getElementById('formError');
-  var submitBtn=form.querySelector('button[type=submit]');
-  var submitLabel=submitBtn.querySelector('span[data-i18n=\"form.submit\"]');
-
-  function showSuccess(){form.style.display='none';ok.classList.add('show');ok.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});}
-  function showError(){
-    if(errEl)errEl.style.display='block';
-    submitBtn.disabled=false;
-    if(submitLabel)submitLabel.textContent=(I18N[currentLang]||I18N.fr)["form.submit"];
-  }
-
+  var form=document.getElementById('contactForm'); var ok=document.getElementById('formSuccess');
   form.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(errEl)errEl.style.display='none';
-    var invalid=false;
+    e.preventDefault(); var invalid=false;
     form.querySelectorAll('[required]').forEach(function(f){
       if(!f.value.trim()||(f.type==='email'&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.value))){f.style.borderColor='#e0586b';invalid=true;}
       else{f.style.borderColor='';}
     });
     if(invalid)return;
-
-    // Si l'ID n'est pas encore configuré : mode démonstration (affiche la confirmation sans envoyer).
-    if(FORMSPREE_ID==="VOTRE_ID_FORMSPREE"){
-      console.warn("Formspree non configuré : remplacez FORMSPREE_ID par votre identifiant pour recevoir les courriels.");
-      showSuccess(); return;
-    }
-
-    submitBtn.disabled=true;
-    if(submitLabel)submitLabel.textContent=(I18N[currentLang]||I18N.fr)["form.sending"];
-
-    fetch("https://formspree.io/f/"+FORMSPREE_ID,{
-      method:"POST",body:new FormData(form),headers:{"Accept":"application/json"}
-    }).then(function(r){
-      if(r.ok){showSuccess();}else{showError();}
-    }).catch(showError);
+    form.style.display='none'; ok.classList.add('show');
+    ok.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
   });
   form.querySelectorAll('[required]').forEach(function(f){f.addEventListener('input',function(){f.style.borderColor='';});});
-
-  // ===== Fenêtre de réservation (GoHighLevel) =====
-  var bookingModal=document.getElementById('bookingModal');
-  var bookingFrame=bookingModal?bookingModal.querySelector('iframe'):null;
-  var bookingLoaded=false;
-  function openBooking(){
-    if(!bookingModal)return;
-    if(!bookingLoaded&&bookingFrame&&bookingFrame.dataset.src){bookingFrame.src=bookingFrame.dataset.src;bookingLoaded=true;}
-    hdr.classList.remove('menu-open');
-    bookingModal.classList.add('open');
-    document.body.classList.add('modal-lock');
-    var c=bookingModal.querySelector('.modal-close');
-    if(c&&!reduce)c.focus();
-  }
-  function closeBooking(){
-    if(!bookingModal)return;
-    bookingModal.classList.remove('open');
-    document.body.classList.remove('modal-lock');
-  }
-  document.querySelectorAll('[data-booking]').forEach(function(b){
-    b.addEventListener('click',function(e){e.preventDefault();openBooking();});
-  });
-  if(bookingModal){
-    bookingModal.querySelectorAll('[data-close]').forEach(function(el){el.addEventListener('click',closeBooking);});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bookingModal.classList.contains('open'))closeBooking();});
-  }
 })();
 </script>
-<script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 </body>
 </html>
