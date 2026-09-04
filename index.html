@@ -767,5 +767,228 @@ body.lock{overflow:hidden}
   document.addEventListener("keydown", function(e){ if(e.key==="Escape" && bk.classList.contains("open")) ferme(); });
 })();
 </script>
+<!-- ▼▼▼   DÉBUT DU BLOC À COLLER DANS TON index.html                     -->
+<!--       Colle tout ce bloc juste AVANT la balise </body>              -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ══ Bannière de témoins — Luniomedia ══ */
+#lunioCookie{
+  position:fixed;left:16px;right:16px;bottom:16px;z-index:60;
+  max-width:640px;margin:0 auto;overflow:hidden;
+  background:linear-gradient(180deg,rgba(16,39,76,.97),rgba(8,21,43,.97));
+  -webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);
+  border:1px solid var(--line-strong,rgba(115,164,231,.30));border-radius:12px;
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.75),0 0 0 1px rgba(115,164,231,.05);
+  color:var(--text,#E8EFFA);font-family:var(--body,'Inter',sans-serif);
+  transform:translateY(150%);opacity:0;
+  transition:transform .55s cubic-bezier(.2,.8,.25,1),opacity .4s ease}
+#lunioCookie.is-open{transform:translateY(0);opacity:1}
+
+/* Trame de plan — clin d'œil au fond quadrillé du site */
+#lunioCookie::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(115,164,231,.07) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(115,164,231,.07) 1px,transparent 1px);
+  background-size:38px 38px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 120% at 100% 0%,#000 10%,transparent 70%);
+          mask-image:radial-gradient(ellipse 90% 120% at 100% 0%,#000 10%,transparent 70%)}
+
+/* Le trait qui se trace à l'ouverture — le seul mouvement de la bannière */
+#lunioCookie .lc-beam{position:absolute;top:0;left:0;height:2px;width:100%;transform-origin:left;
+  transform:scaleX(0);background:linear-gradient(90deg,var(--blue,#4887E0),rgba(72,135,224,0));
+  transition:transform .8s cubic-bezier(.2,.8,.25,1) .25s}
+#lunioCookie.is-open .lc-beam{transform:scaleX(1)}
+
+#lunioCookie .lc-inner{position:relative;padding:24px 26px 22px}
+#lunioCookie h2{font-family:var(--display,'Space Grotesk',sans-serif);font-weight:600;
+  font-size:19px;line-height:1.25;letter-spacing:-.01em;margin:0 0 9px;color:var(--text,#E8EFFA)}
+#lunioCookie p{margin:0;font-size:14.5px;line-height:1.6;color:var(--muted,#90A6C6);max-width:52ch}
+#lunioCookie p a{color:var(--blue-soft,#A8C6F0);text-decoration:underline;text-underline-offset:3px;
+  text-decoration-thickness:1px;text-decoration-color:rgba(168,198,240,.4);transition:color .2s}
+#lunioCookie p a:hover{color:#fff;text-decoration-color:currentColor}
+
+/* Panneau de réglages */
+#lunioCookie .lc-prefs{display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .45s cubic-bezier(.2,.8,.25,1)}
+#lunioCookie.is-expanded .lc-prefs{grid-template-rows:1fr}
+#lunioCookie .lc-prefs-clip{overflow:hidden}
+#lunioCookie .lc-row{display:flex;align-items:flex-start;gap:16px;padding:15px 0;
+  border-top:1px solid var(--line,rgba(115,164,231,.13))}
+#lunioCookie .lc-row:first-child{margin-top:18px}
+#lunioCookie .lc-row-txt{flex:1;min-width:0}
+#lunioCookie .lc-row-title{font-size:14.5px;font-weight:600;color:var(--text,#E8EFFA);margin-bottom:3px}
+#lunioCookie .lc-row-desc{font-size:13px;line-height:1.5;color:var(--muted,#90A6C6)}
+#lunioCookie .lc-locked{font-size:12.5px;font-weight:500;color:var(--blue-soft,#A8C6F0);
+  padding-top:3px;white-space:nowrap}
+
+/* Interrupteur */
+#lunioCookie .lc-sw{position:relative;flex:0 0 auto;width:44px;height:25px;
+  background:rgba(255,255,255,.09);border:1px solid var(--line-strong,rgba(115,164,231,.30));
+  border-radius:99px;cursor:pointer;padding:0;transition:background .25s,border-color .25s}
+#lunioCookie .lc-sw::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;
+  border-radius:50%;background:var(--muted,#90A6C6);transition:transform .25s cubic-bezier(.2,.8,.25,1),background .25s}
+#lunioCookie .lc-sw[aria-checked="true"]{background:var(--blue,#4887E0);border-color:var(--blue,#4887E0)}
+#lunioCookie .lc-sw[aria-checked="true"]::after{transform:translateX(19px);background:#06101f}
+
+/* Boutons */
+#lunioCookie .lc-btns{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:20px}
+#lunioCookie button.lc-b{font-family:var(--body,'Inter',sans-serif);font-weight:600;font-size:14.5px;
+  padding:12px 22px;border-radius:5px;cursor:pointer;border:1px solid transparent;
+  transition:transform .18s ease,background .2s ease,border-color .2s ease,color .2s ease}
+#lunioCookie button.lc-b:hover{transform:translateY(-2px)}
+#lunioCookie .lc-accept{background:var(--blue,#4887E0);color:#06101f;order:3;flex:1 1 auto}
+#lunioCookie .lc-accept:hover{background:var(--blue-bright,#73A4E7)}
+#lunioCookie .lc-refuse{background:transparent;color:var(--text,#E8EFFA);order:2;flex:1 1 auto;
+  border-color:var(--line-strong,rgba(115,164,231,.30))}
+#lunioCookie .lc-refuse:hover{border-color:var(--blue,#4887E0)}
+#lunioCookie .lc-custom{background:transparent;color:var(--muted,#90A6C6);order:1;
+  padding:12px 4px;font-weight:500;margin-right:auto}
+#lunioCookie .lc-custom:hover{color:var(--text,#E8EFFA);transform:none}
+#lunioCookie :focus-visible{outline:2px solid var(--blue-bright,#73A4E7);outline-offset:3px;border-radius:4px}
+
+@media(max-width:519px){
+  #lunioCookie .lc-inner{padding:22px 20px 20px}
+  #lunioCookie h2{font-size:17.5px}
+  #lunioCookie .lc-custom{order:3;margin:2px auto 0;width:100%;text-align:center}
+  #lunioCookie .lc-accept,#lunioCookie .lc-refuse{flex:1 1 100%}
+}
+@media(prefers-reduced-motion:reduce){
+  #lunioCookie,#lunioCookie *{transition-duration:.01ms !important}
+  #lunioCookie .lc-beam{transform:scaleX(1)}
+}
+</style>
+
+<div id="lunioCookie" role="dialog" aria-modal="false" aria-labelledby="lunioCookieTitle">
+  <span class="lc-beam" aria-hidden="true"></span>
+  <div class="lc-inner">
+    <h2 id="lunioCookieTitle" data-fr="Avant qu'on aille plus loin" data-en="Before we go further">Avant qu'on aille plus loin</h2>
+    <p data-fr="On utilise des témoins pour faire rouler le site, et — seulement si tu l'acceptes — pour comprendre ce qui fonctionne. Tu peux refuser : ça ne change rien à ta visite."
+       data-en="We use cookies to run the site and — only if you agree — to understand what works. You can decline: it changes nothing about your visit.">
+      On utilise des témoins pour faire rouler le site, et — seulement si tu l'acceptes — pour comprendre ce qui fonctionne. Tu peux refuser&nbsp;: ça ne change rien à ta visite.
+    </p>
+
+    <div class="lc-prefs">
+      <div class="lc-prefs-clip">
+        <div class="lc-row">
+          <div class="lc-row-txt">
+            <div class="lc-row-title" data-fr="Fonctionnement du site" data-en="Site functionality">Fonctionnement du site</div>
+            <div class="lc-row-desc" data-fr="Ta langue, le formulaire de contact et le calendrier de réservation. Le site ne marche pas sans."
+                 data-en="Your language, the contact form and the booking calendar. The site doesn't work without these.">
+              Ta langue, le formulaire de contact et le calendrier de réservation. Le site ne marche pas sans.
+            </div>
+          </div>
+          <span class="lc-locked" data-fr="Toujours actif" data-en="Always on">Toujours actif</span>
+        </div>
+        <div class="lc-row">
+          <div class="lc-row-txt">
+            <div class="lc-row-title" data-fr="Mesure d'audience" data-en="Audience measurement">Mesure d'audience</div>
+            <div class="lc-row-desc" data-fr="Combien de personnes visitent le site et quelles pages les intéressent. Rien de nominatif."
+                 data-en="How many people visit and which pages interest them. Nothing personally identifying.">
+              Combien de personnes visitent le site et quelles pages les intéressent. Rien de nominatif.
+            </div>
+          </div>
+          <button class="lc-sw" id="lunioSwMesure" type="button" role="switch" aria-checked="false"
+                  aria-label="Mesure d'audience"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lc-btns">
+      <button class="lc-b lc-custom" id="lunioCustom" type="button" aria-expanded="false"
+              data-fr="Personnaliser" data-en="Customize"
+              data-fr-close="Masquer les réglages" data-en-close="Hide settings">Personnaliser</button>
+      <button class="lc-b lc-refuse" id="lunioRefuse" type="button" data-fr="Refuser" data-en="Decline">Refuser</button>
+      <button class="lc-b lc-accept" id="lunioAccept" type="button"
+              data-fr="Tout accepter" data-en="Accept all"
+              data-fr-save="Enregistrer mes choix" data-en-save="Save my choices">Tout accepter</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='lunio_consent';
+  var box=document.getElementById('lunioCookie');
+  if(!box)return;
+
+  var btnAccept=document.getElementById('lunioAccept'),
+      btnRefuse=document.getElementById('lunioRefuse'),
+      btnCustom=document.getElementById('lunioCustom'),
+      swMesure =document.getElementById('lunioSwMesure');
+
+  /* ─────────────────────────────────────────────────────────────
+     👉 C'EST ICI que tu colles ton pixel Meta ou Google Analytics.
+     Ce code ne se déclenche QUE si la personne a donné son accord.
+     ───────────────────────────────────────────────────────────── */
+  function activerLaMesure(){
+    // Exemple :
+    // var s=document.createElement('script');
+    // s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX';
+    // document.head.appendChild(s);
+  }
+
+  function lire(){try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;}}
+  function ecrire(o){try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}}
+
+  function langue(){
+    return (document.documentElement.lang||'fr').toLowerCase().indexOf('en')===0?'en':'fr';
+  }
+  function traduire(){
+    var l=langue();
+    box.querySelectorAll('[data-'+l+']').forEach(function(el){
+      var t=el.getAttribute('data-'+l); if(t)el.textContent=t;
+    });
+    majBoutons();
+  }
+  function majBoutons(){
+    var l=langue(), ouvert=box.classList.contains('is-expanded');
+    btnCustom.textContent=ouvert?btnCustom.getAttribute('data-'+l+'-close'):btnCustom.getAttribute('data-'+l);
+    btnAccept.textContent=ouvert?btnAccept.getAttribute('data-'+l+'-save'):btnAccept.getAttribute('data-'+l);
+  }
+
+  function fermer(){box.classList.remove('is-open');}
+  function enregistrer(mesure){
+    ecrire({mesure:!!mesure,date:new Date().toISOString()});
+    if(mesure)activerLaMesure();
+    fermer();
+  }
+
+  btnCustom.addEventListener('click',function(){
+    var ouvert=box.classList.toggle('is-expanded');
+    btnCustom.setAttribute('aria-expanded',ouvert?'true':'false');
+    majBoutons();
+  });
+  swMesure.addEventListener('click',function(){
+    swMesure.setAttribute('aria-checked',swMesure.getAttribute('aria-checked')==='true'?'false':'true');
+  });
+  btnAccept.addEventListener('click',function(){
+    // Panneau ouvert → on respecte l'interrupteur. Panneau fermé → tout accepter.
+    enregistrer(box.classList.contains('is-expanded')
+      ? swMesure.getAttribute('aria-checked')==='true' : true);
+  });
+  btnRefuse.addEventListener('click',function(){ enregistrer(false); });
+
+  // Suit le sélecteur FR/EN du site en direct
+  new MutationObserver(traduire).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  traduire();
+
+  var choix=lire();
+  if(choix){ if(choix.mesure)activerLaMesure(); }
+  else{ setTimeout(function(){ box.classList.add('is-open'); },900); }
+
+  // Permet de rouvrir les réglages depuis un lien : <a href="#" data-cookies>Gérer les témoins</a>
+  document.querySelectorAll('[data-cookies]').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.preventDefault();
+      var c=lire();
+      swMesure.setAttribute('aria-checked',c&&c.mesure?'true':'false');
+      box.classList.add('is-open','is-expanded');
+      btnCustom.setAttribute('aria-expanded','true'); majBoutons();
+    });
+  });
+})();
+</script>
+
+<!-- ▲▲▲   FIN DU BLOC À COLLER                                          -->
 </body>
 </html>
