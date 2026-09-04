@@ -995,5 +995,100 @@ body.lock{overflow:hidden}
 </script>
 <!-- ▲▲▲   FIN DU BLOC À COLLER                                          -->
 <!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- ▼▼▼   BLOC ANALYTICS — À COLLER JUSTE AVANT </body>                  -->
+<!--       IMPORTANT : placez-le APRÈS le bloc de la bannière            -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+
+<script>
+(function(){
+  "use strict";
+
+  var GA_ID = 'G-BE8SVKESWZ';   // Identifiant de mesure Luniomedia
+  var charge = false;
+
+  /* Le consentement est lu directement depuis le choix de la bannière.
+     Aucune donnée n'est envoyée tant que « Mesure d'audience » n'est pas acceptée. */
+  function consentement(){
+    try{
+      var c = JSON.parse(localStorage.getItem('lunio_consent'));
+      return !!(c && c.mesure);
+    }catch(e){ return false; }
+  }
+
+  function chargerAnalytics(){
+    if(charge || !consentement()) return;
+    charge = true;
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+  }
+
+  function evenement(nom, params){
+    if(charge && window.gtag) gtag('event', nom, params || {});
+  }
+
+  /* 1. Au chargement : si le visiteur a déjà accepté lors d'une visite précédente. */
+  chargerAnalytics();
+
+  /* 2. S'il accepte maintenant, on démarre sans attendre un rechargement.
+        Le délai laisse la bannière écrire son choix avant qu'on le lise. */
+  ['lunioAccept','lunioRefuse'].forEach(function(id){
+    var b = document.getElementById(id);
+    if(b) b.addEventListener('click', function(){ setTimeout(chargerAnalytics, 60); });
+  });
+
+  /* ══ CONVERSION 1 — Ouverture du calendrier de réservation ══
+     Se greffe sur vos boutons « Appel gratuit », « Réserver un appel de 20 min »,
+     etc. sans toucher à votre code existant. */
+  document.querySelectorAll('[data-bk]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var txt = (el.textContent || '').trim().replace(/\s+/g,' ').slice(0,60);
+      evenement('reservation_ouverte', {
+        bouton: txt,
+        section: (el.closest('section, header, nav, footer') || {}).tagName || 'inconnue'
+      });
+    });
+  });
+
+  /* ══ CONVERSION 2 — Formulaire de contact envoyé avec succès ══
+     On surveille l'apparition de votre message de confirmation : l'événement
+     ne part donc que si l'envoi a vraiment réussi, jamais sur un simple clic. */
+  var confirmation = document.getElementById('fo');
+  if(confirmation){
+    var obs = new MutationObserver(function(){
+      if(confirmation.classList.contains('show')){
+        var sec = document.getElementById('sec');
+        evenement('demande_soumission', {
+          type_projet: (sec && sec.value) ? sec.value : 'non precise'
+        });
+        obs.disconnect();
+      }
+    });
+    obs.observe(confirmation, { attributes:true, attributeFilter:['class'] });
+  }
+
+  /* ══ SIGNAL SECONDAIRE — Visiteur réellement engagé ══
+     Se déclenche à 60 % de défilement. Utile pour distinguer un vrai
+     prospect d'un visiteur qui rebondit en trois secondes. */
+  var lu = false;
+  window.addEventListener('scroll', function(){
+    if(lu) return;
+    var h = document.documentElement;
+    var pct = (h.scrollTop + window.innerHeight) / h.scrollHeight;
+    if(pct > 0.6){ lu = true; evenement('lecture_approfondie'); }
+  }, { passive:true });
+
+})();
+</script>
+
+<!-- ▲▲▲   FIN DU BLOC ANALYTICS                                          -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
 </body>
 </html>
